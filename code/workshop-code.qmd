@@ -81,12 +81,13 @@ Data source: Valliere, Justin; Zhang, Jacqueline; Sharifi, M.; Rundel, Philip (2
 ```{r}
 #| label: data cleaning
 
-# 
-drought_exp_clean <- drought_exp 
-  # 
-  clean_names() 
-  # 
-  mutate(species_name = case_match(
+# create new objwxr for clean data
+drought_exp_clean <- drought_exp |> 
+  # remove spaces, add lowercases and replaces spaces with underscores
+  clean_names() |> 
+  # creating new column with full scientific name
+  # change species names abbreviated into full name
+  mutate(species_name = recode_values(
     species,
     "ENCCAL" ~ "Encelia californica", # bush sunflower
     "ESCCAL" ~ "Eschscholzia californica", # California poppy
@@ -95,14 +96,14 @@ drought_exp_clean <- drought_exp
     "SALLEU" ~ "Salvia leucophylla", # purple sage
     "STIPUL" ~ "Stipa pulchra", # purple needlegrass
     "LOTSCO" ~ "Lotus scoparius" # deerweed
-  )) 
-  # 
+  )) |> 
+  # create new column for full treatment name
   mutate(water_treatment = case_match(
     water,
     "WW" ~ "Well watered",
     "DS" ~ "Drought stressed"
-  ))  
-  # 
+  ))  |> 
+  # store species name as factor, reorder data
   mutate(species_name = as_factor(species_name),
          species_name = fct_relevel(species_name,
                                     "Lotus scoparius",
@@ -111,22 +112,35 @@ drought_exp_clean <- drought_exp
                                     "Encelia californica",
                                     "Stipa pulchra",
                                     "Eschscholzia californica",
-                                    "Grindelia camporum")) 
+                                    "Grindelia camporum")) |> 
+  #reordering water treatment levels
   mutate(water_treatment = as_factor(water_treatment),
          water_treatment = fct_relevel(water_treatment,
                                        "Drought stressed",
-                                       "Well watered")) 
-  #
+                                       "Well watered")) |> 
+  # select columns of interest from clean data
   select(species_name, water_treatment, sla, total_g)
 ```
 
 Insert code to double check the structure of the data frame here.  
 
+```{r}
+#echking-structure
+
+str(drought_exp_clean
+    )
+```
 
 
 
 Insert code to display 10 random rows from the data frame here.  
 
+```{r}
+#| label: ten-rows
+
+slice_sample(drought_exp_clean, #clean data frame to display
+             n = 10 # show 10 rows)
+```
 
 
 
