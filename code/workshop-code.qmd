@@ -181,6 +181,8 @@ Add a title describing the differences in (mean or median) plant mass between wa
 
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 8
 ggplot(drought_exp_clean, aes(x = water_treatment, 
                               y = total_g, color = water_treatment)) +
   geom_jitter(height = 0, width = 0.1) +
@@ -210,6 +212,8 @@ Bonus: order the x-axis by decreasing mean plant mass.
 
 
 ```{r}
+#| fig-height: 8
+#| fig-width: 6
 
 ggplot(drought_exp_clean, aes(x = species_name, y = total_g)) +
   geom_jitter(height = 0, width = 0.2) +
@@ -218,13 +222,13 @@ ggplot(drought_exp_clean, aes(x = species_name, y = total_g)) +
        x = "Species",
        y = "Total plant mass (g)") +
   scale_color_manual(values = c(
-    "Lotus scoparius" = lotsco_col, 
-    "Penstemon centranthifolius" = pencen_col, 
-    "Salvia leucophylla" = salleu_col, 
-    "Encelia californica" = enccal_col, 
-    "Stipa pulchra" = stipul_col, 
-    "Eschscholzia californica" = esccal_col, 
-    "Grindelia camporum" = gricam_col
+    "Lotus scoparius" =lotsco_col, 
+    "Penstemon centranthifolius" =pencen_col, 
+    "Salvia leucophylla" =salleu_col, 
+    "Encelia californica" =enccal_col, 
+    "Stipa pulchra" =stipul_col, 
+    "Eschscholzia californica" =esccal_col, 
+    "Grindelia camporum" =gricam_col
     ))
   
 
@@ -306,6 +310,8 @@ model7 <- lm(
 
 
 ```{r}
+#| fig-height: 6
+#| fig-width: 6
 #displaying polots in 2x2 grid
 par(mfrow = c(2, 2)) 
 #plotting diagnostics
@@ -410,6 +416,8 @@ rename(water_treatment = x,
 
 Create a clean, publication ready figure depicting predictions for the best model and the underlying data.
 ```{r}
+#| fig-height: 10
+#| fig-width: 6
 #base layer ggplot
 ggplot(drought_exp_clean, #data set
        aes(x = water_treatment, #x = water treatment
