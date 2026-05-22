@@ -213,7 +213,7 @@ Bonus: order the x-axis by decreasing mean plant mass.
 
 ggplot(drought_exp_clean, aes(x = species_name, y = total_g)) +
   geom_jitter(height = 0, width = 0.2) +
-  scale_x_discrete(labels = label_wrap(10))+
+  scale_x_discrete(labels = label_wrap(10)) +
   labs(title = "Species differ in plant mass", 
        x = "Species",
        y = "Total plant mass (g)") +
@@ -305,8 +305,18 @@ model7 <- lm(
 
 
 
+```{r}
+#displaying polots in 2x2 grid
+par(mfrow = c(2, 2)) 
+#plotting diagnostics
+plot(model4)
 
+```
 
+- residuals are normally distributed(QQ plot)
+- residuals are homoscedastic (Residuals vs Fitted/Scale-location)
+- no outliers that could be influencing model coefficeinet estimates
+(leverage)
 
 ## Model selection
 
@@ -314,11 +324,32 @@ Insert code to use the `AICc()` function to calculate the AIC for each model.
 
 Arrange by decreasing AIC.
 
+```{r}
+
+AICc(
+  model0, 
+  model1, 
+  model2, 
+  model3,
+  model4,
+  model5,
+  model6,
+  model7
+)
+
+
+
+```
 
 
 
 Insert code to display the summary for the best model. 
 
+```{r}
+#model summary
+
+summary(model4)
+```
 
 
 
@@ -327,15 +358,30 @@ Insert code to display the summary for the best model.
 
 **What is the best model?**
 
-[insert your response here]
+The best model includes water treatment and species as predictors.
 
 **How much variation in the response (total mass, in grams) does this model explain?**
 
-[insert your response here]
+72.6% of the variation in plant mass is explained by this model
 
 **How do we interpret the effects of the predictors on the response variable (again, total mass in grams)?**
 
-[insert your response here]
+Species influences plant mass. 
+Treatment influences plant mass. 
+
+
+-`(Intercept)`: The intercept is the model prediction for plant mass 
+for Lotus scoparius in the drought stressed treatment. 
+-`water_treatmentWellWatered`: model prediction for the difference
+in Lotus scoparius mass between well watered and drought stressed treatments
+-`species_namePenstemon centrathifolious`:  difference between 
+Penstemon mass in well watered treatment and Lotus scoparous mass in the 
+well watered treatment. 
+- `species_nameSalvia leucophylla`: difference between Eschscholzia californica 
+mass in the well watered treatment and Lotus scoparois mass in the well 
+watered treatment. 
+
+
 
 # 4. Model predictions
 
